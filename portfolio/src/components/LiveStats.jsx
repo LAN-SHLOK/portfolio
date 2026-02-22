@@ -1,0 +1,61 @@
+import React, { useState, useEffect } from 'react';
+import SpotlightCard from './SpotlightCard';
+import { Github, Trophy, Star, GitCommit, Target, Code } from 'lucide-react';
+
+const LiveStats = () => {
+  const githubUsername = "LAN-SHLOK";
+  const leetcodeUsername = "lan-shlok";
+
+  const [stats, setStats] = useState({
+    github: { repos: 0, followers: 0, loading: true },
+    leetcode: { total: 0, easy: 0, medium: 0, hard: 0, loading: true }
+  });
+
+  useEffect(() => {
+    fetch(`https://api.github.com/users/${githubUsername}`)
+      .then(res => res.json())
+      .then(data => setStats(prev => ({ ...prev, github: { repos: data.public_repos || 0, followers: data.followers || 0, loading: false } })))
+      .catch(console.error);
+
+    fetch(`https://leetcode-stats-api.herokuapp.com/${leetcodeUsername}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          setStats(prev => ({ ...prev, leetcode: { total: data.totalSolved, easy: data.easySolved, medium: data.mediumSolved, hard: data.hardSolved, loading: false } }));
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  return (
+    <div className="w-full">
+      <h2 className="text-xl font-bold text-gray-400 mb-6 uppercase tracking-widest">Live Performance</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <SpotlightCard className="p-6 border-l-2 border-orange-500">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-3"><Trophy className="text-orange-500" size={20} /><h3 className="font-bold">LeetCode</h3></div>
+            <span className="text-xs text-green-400">● Live</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="p-2 bg-white/5 rounded"><div className="text-xs text-gray-400">Easy</div><div className="text-lg font-mono text-green-400">{stats.leetcode.loading ? "-" : stats.leetcode.easy}</div></div>
+            <div className="p-2 bg-white/5 rounded"><div className="text-xs text-gray-400">Med</div><div className="text-lg font-mono text-yellow-400">{stats.leetcode.loading ? "-" : stats.leetcode.medium}</div></div>
+            <div className="p-2 bg-white/5 rounded"><div className="text-xs text-gray-400">Hard</div><div className="text-lg font-mono text-red-400">{stats.leetcode.loading ? "-" : stats.leetcode.hard}</div></div>
+          </div>
+        </SpotlightCard>
+
+        <SpotlightCard className="p-6 border-l-2 border-purple-500">
+           <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-3"><Github className="text-purple-500" size={20} /><h3 className="font-bold">GitHub</h3></div>
+            <span className="text-xs text-green-400">● Live</span>
+          </div>
+          <div className="flex justify-around text-center">
+            <div><div className="text-2xl font-mono text-white">{stats.github.loading ? "-" : stats.github.repos}</div><div className="text-xs text-gray-400">Repos</div></div>
+            <div><div className="text-2xl font-mono text-white">{stats.github.loading ? "-" : stats.github.followers}</div><div className="text-xs text-gray-400">Followers</div></div>
+          </div>
+        </SpotlightCard>
+      </div>
+    </div>
+  );
+};
+
+export default LiveStats;

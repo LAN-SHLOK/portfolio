@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-background text-white selection:bg-primary selection:text-white;
+  /* Deep Dark Background for contrast */
+  background-color: #050505;
+  background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 70%);
+  overflow-x: hidden;
+}
+
+.spotlight-card {
+  @apply relative overflow-hidden bg-surface border border-white/10 rounded-2xl transition-all duration-300;
+}
+.spotlight-card::before {
+  content: "";
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+}
+.spotlight-card:hover::before { @apply opacity-100; }
+
+/* 3D Settings */
+.perspective-1000 { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-white/10 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-white/20; }
+/* Floating Animation for Liveliness */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Ensure the selected item floats slower/differently */
+.animate-float-slow {
+  animation: float 4s ease-in-out infinite;
+}
+/* Floating Animation (Bobbing up and down) */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Pulse Glow Animation */
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(6,182,212,0.4); border-color: rgba(6,182,212,0.5); }
+  50% { box-shadow: 0 0 50px rgba(6,182,212,0.8); border-color: rgba(6,182,212,1); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Delays to make them look organic (not moving in sync) */
+.delay-0 { animation-delay: 0s; }
+.delay-100 { animation-delay: 1s; }
+.delay-200 { animation-delay: 2s; }
+.delay-300 { animation-delay: 3s; }
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s infinite;
+}
+::selection {
+  background-color: #a855f7; /* Purple-500 */
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+/* For Firefox compatibility */
+::-moz-selection {
+  background-color: #a855f7;
+  color: #ffffff;
+}
+
+/* Ensure text is readable and selecting works */
+body {
+  caret-color: #06b6d4; /* Cyan cursor when typing */
+}

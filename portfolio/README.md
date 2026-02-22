@@ -20,6 +20,8 @@ Database: **SQL**, Java-based systems (Neon Pulse)
 
 Deployment: **AWS**, Vercel
 
+
+
 🧠 Case Study: Solving the *Live Stats* Challenge One of the most technically challenging features of this portfolio is the Live Performance Dashboard, which tracks progress on GitHub and LeetCode. During development, we identified and solved several industry-standard hurdles:
 
 ### Challenges Identified
@@ -41,6 +43,8 @@ Asset Mapping: Resolved Vercel routing issues to ensure the resume.pdf is served
 📂 Featured Projects MediBot - Medical AI Assistant A health-focused AI assistant designed to provide intuitive medical information through **NLP**.
 
 Tech: Python, Flask, React.js.
+
+
 
 ### Neon Pulse
 

@@ -20,11 +20,10 @@ Database: **SQL**, Java-based systems (Neon Pulse)
 
 Deployment: **AWS**, Vercel
 
-
-
 🧠 Case Study: Solving the *Live Stats* Challenge One of the most technically challenging features of this portfolio is the Live Performance Dashboard, which tracks progress on GitHub and LeetCode. During development, we identified and solved several industry-standard hurdles:
 
-### Challenges Identified
+
+## Challenges Identified
 
 **CORS** & Security: Browser security policies (**CORS**) blocked direct client-side requests to LeetCode's unofficial APIs.
 
@@ -32,7 +31,8 @@ Deployment: **AWS**, Vercel
 
 Server Cold Starts: Free **API** instances on platforms like Render would sleep, causing 30-second delays in data fetching.
 
-### The Engineering Solution
+
+## The Engineering Solution
 
 Hardcoded Fallbacks: Implemented a robust state management system. The UI now initializes with confirmed counts (3 Easy Solves, 21 Repos) to ensure an instant, professional load experience.
 

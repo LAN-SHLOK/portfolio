@@ -69,7 +69,9 @@ const Home = () => {
         {/* Socials */}
         <div className="flex gap-8 justify-center items-center mt-12 opacity-50 hover:opacity-100 transition-opacity duration-500">
             <a href="https://github.com/LAN-SHLOK" target="_blank" rel="noreferrer" className="hover:text-cyan-400 hover:scale-110 transition-all"><Github size={24} /></a>
-            <a href="#" className="hover:text-cyan-400 hover:scale-110 transition-all"><Linkedin size={24} /></a>
+            
+            {/* UPDATED LINKEDIN LINK HERE */}
+            <a href="https://www.linkedin.com/in/shlok-patel-912508320" target="_blank" rel="noreferrer" className="hover:text-cyan-400 hover:scale-110 transition-all"><Linkedin size={24} /></a>
         </div>
       </div>
 

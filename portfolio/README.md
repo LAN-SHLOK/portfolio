@@ -1,4 +1,6 @@
-Shlok Patel | Full Stack Developer & AI Enthusiast A high-performance, responsive personal portfolio built with React, Tailwind **CSS**, and Framer Motion. This project serves as my digital headquarters, showcasing my work in Web Development and Artificial Intelligence.
+## Shlok Patel | Full Stack Developer & AI Enthusiast
+
+A high-performance, responsive personal portfolio built with React, Tailwind **CSS**, and Framer Motion. This project serves as my digital headquarters, showcasing my work in Web Development and Artificial Intelligence.
 
 🚀 The Mission I am an 18-year-old developer and student at **LJIET**, Ahmedabad. My work focuses on bridging the gap between Conceptual AI and Production Software, specializing in building scalable systems and modern web architectures.
 
@@ -44,16 +46,5 @@ Tech: Python, Flask, React.js.
 
 A Java application demonstrating software engineering principles and executable packaging.
 
-🔧 Installation & Setup Clone the Repo:
-
-Bash git clone [https://github.com/**LAN**-**SHLOK**/portfolio.git](https://github.com/**LAN**-**SHLOK**/portfolio.git) Install Dependencies:
-
-Bash npm install Run Development Server:
-
-Bash npm run dev 🤝 Connect with Me LinkedIn: shlok-patel-dev
-
-GitHub: **LAN**-**SHLOK**
-
-LeetCode: lan-shlok
 
 Built with React, Tailwind **CSS**, and a focus on clean debugging by Shlok Patel.

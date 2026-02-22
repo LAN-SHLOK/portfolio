@@ -3,7 +3,6 @@ import SpotlightCard from './SpotlightCard';
 import { Github, Trophy } from 'lucide-react';
 
 const LiveStats = () => {
-  // Your exact usernames are right here
   const githubUsername = "LAN-SHLOK";
   const leetcodeUsername = "lan-shlok";
 
@@ -30,18 +29,20 @@ const LiveStats = () => {
         setStats(prev => ({ ...prev, github: { repos: 0, followers: 0, loading: false } }));
       });
 
-    // 2. Fetch LeetCode Stats (Using the new Alfa API)
-    fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUsername}/solved`)
+    // 2. Fetch LeetCode Stats (The CORRECT Serverless API)
+    fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUsername}`)
       .then(res => {
         if (!res.ok) throw new Error("LeetCode API Offline");
         return res.json();
       })
       .then(data => {
-        // Alfa API uses "solvedProblem" instead of "totalSolved"
+        // If data is missing or user not found, throw error
+        if (data.errors || data.easySolved === undefined) throw new Error("Data not found");
+
         setStats(prev => ({ 
           ...prev, 
           leetcode: { 
-            total: data.solvedProblem || 0, 
+            total: data.totalSolved || 0, 
             easy: data.easySolved || 0, 
             medium: data.mediumSolved || 0, 
             hard: data.hardSolved || 0, 

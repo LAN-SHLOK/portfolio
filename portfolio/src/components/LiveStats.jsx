@@ -3,6 +3,7 @@ import SpotlightCard from './SpotlightCard';
 import { Github, Trophy } from 'lucide-react';
 
 const LiveStats = () => {
+  // Your exact usernames are right here
   const githubUsername = "LAN-SHLOK";
   const leetcodeUsername = "lan-shlok";
 
@@ -29,20 +30,18 @@ const LiveStats = () => {
         setStats(prev => ({ ...prev, github: { repos: 0, followers: 0, loading: false } }));
       });
 
-    // 2. Fetch LeetCode Stats (UPDATED TO A RELIABLE API)
-    fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUsername}`)
+    // 2. Fetch LeetCode Stats (Using the new Alfa API)
+    fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUsername}/solved`)
       .then(res => {
         if (!res.ok) throw new Error("LeetCode API Offline");
         return res.json();
       })
       .then(data => {
-        // If the API returns an error message, throw an error
-        if (data.errors) throw new Error("LeetCode User Not Found");
-
+        // Alfa API uses "solvedProblem" instead of "totalSolved"
         setStats(prev => ({ 
           ...prev, 
           leetcode: { 
-            total: data.totalSolved || 0, 
+            total: data.solvedProblem || 0, 
             easy: data.easySolved || 0, 
             medium: data.mediumSolved || 0, 
             hard: data.hardSolved || 0, 
@@ -51,7 +50,7 @@ const LiveStats = () => {
         }));
       })
       .catch(err => {
-        console.warn(err.message);
+        console.warn("LeetCode Fetch Error:", err.message);
         setStats(prev => ({ 
           ...prev, 
           leetcode: { total: 0, easy: 0, medium: 0, hard: 0, loading: false } 

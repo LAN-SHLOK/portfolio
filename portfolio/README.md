@@ -44,11 +44,25 @@ Asset Mapping: Resolved Vercel routing issues to ensure the resume.pdf is served
 
 Tech: Python, Flask, React.js.
 
+## 🔧 Installation & Setup
 
 
-### Neon Pulse
+1. **Clone the Repo:**
+   ```bash
+   git clone [https://github.com/LAN-SHLOK/portfolio.git](https://github.com/LAN-SHLOK/portfolio.git)
+Install Dependencies:
+```
+Bash
+npm install
 
-A Java application demonstrating software engineering principles and executable packaging.
+# Run Development Server:
+npm run dev
+
+```
+## 🤝 Connect with Me
+
+LinkedIn: https://www.linkedin.com/shlok-patel-dev
+
 
 
 Built with React, Tailwind **CSS**, and a focus on clean debugging by Shlok Patel.

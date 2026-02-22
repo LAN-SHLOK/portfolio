@@ -24,7 +24,7 @@ const Home = () => {
           System Online • Open to Work
         </motion.div>
         
-        {/* Main Title - UPDATED: JUST NAME */}
+        {/* Main Title */}
         <motion.h1 
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="text-6xl md:text-9xl font-extrabold tracking-tight text-white leading-tight mb-4"
@@ -61,7 +61,14 @@ const Home = () => {
             Explore Work <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           
-          <a href="/resume.pdf" download="Resume_Shlok.pdf" className="group px-8 py-4 border border-white/10 bg-white/5 text-white font-bold rounded-full hover:bg-white/10 hover:border-cyan-400/50 hover:text-cyan-400 transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
+          {/* UPDATED CV LINK WITH CORRECT RELATIVE PATH */}
+          <a 
+            href="./resume.pdf" 
+            download="Resume_Shlok.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group px-8 py-4 border border-white/10 bg-white/5 text-white font-bold rounded-full hover:bg-white/10 hover:border-cyan-400/50 hover:text-cyan-400 transition-all flex items-center justify-center gap-2 backdrop-blur-sm"
+          >
             Download CV <FileDown size={20} className="group-hover:translate-y-1 transition-transform" />
           </a>
         </motion.div>
@@ -69,8 +76,6 @@ const Home = () => {
         {/* Socials */}
         <div className="flex gap-8 justify-center items-center mt-12 opacity-50 hover:opacity-100 transition-opacity duration-500">
             <a href="https://github.com/LAN-SHLOK" target="_blank" rel="noreferrer" className="hover:text-cyan-400 hover:scale-110 transition-all"><Github size={24} /></a>
-            
-            {/* UPDATED LINKEDIN LINK HERE */}
             <a href="https://www.linkedin.com/in/shlok-patel-912508320" target="_blank" rel="noreferrer" className="hover:text-cyan-400 hover:scale-110 transition-all"><Linkedin size={24} /></a>
         </div>
       </div>

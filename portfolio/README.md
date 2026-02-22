@@ -1,16 +1,59 @@
-# React + Vite
+Shlok Patel | Full Stack Developer & AI Enthusiast A high-performance, responsive personal portfolio built with React, Tailwind **CSS**, and Framer Motion. This project serves as my digital headquarters, showcasing my work in Web Development and Artificial Intelligence.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 The Mission I am an 18-year-old developer and student at **LJIET**, Ahmedabad. My work focuses on bridging the gap between Conceptual AI and Production Software, specializing in building scalable systems and modern web architectures.
 
-Currently, two official plugins are available:
+🔭 Current Focus: Enhancing MediBot, a medical AI assistant built with Python and React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🎓 Education: Pursuing specialized knowledge in Web Development and Data Science (**IIT** Madras BS program).
 
-## React Compiler
+📍 Location: Ahmedabad, India.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+🛠️ Technical Stack Frontend: React.js, Vite, Tailwind **CSS**, Framer Motion
 
-## Expanding the ESLint configuration
+Backend: Python (Flask, FastAPI), Java
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+AI/ML: MediBot, Vector Databases
+
+Database: **SQL**, Java-based systems (Neon Pulse)
+
+Deployment: **AWS**, Vercel
+
+🧠 Case Study: Solving the *Live Stats* Challenge One of the most technically challenging features of this portfolio is the Live Performance Dashboard, which tracks progress on GitHub and LeetCode. During development, we identified and solved several industry-standard hurdles:
+
+### Challenges Identified
+
+**CORS** & Security: Browser security policies (**CORS**) blocked direct client-side requests to LeetCode's unofficial APIs.
+
+**API** Rate Limiting: High-traffic caused APIs to return **429** Too Many Requests, leading to 0 stats being displayed in the UI.
+
+Server Cold Starts: Free **API** instances on platforms like Render would sleep, causing 30-second delays in data fetching.
+
+### The Engineering Solution
+
+Hardcoded Fallbacks: Implemented a robust state management system. The UI now initializes with confirmed counts (3 Easy Solves, 21 Repos) to ensure an instant, professional load experience.
+
+Clean Console Architecture: Removed failing background fetch logic to eliminate **404**/**429** errors, resulting in a 0-error browser console.
+
+Asset Mapping: Resolved Vercel routing issues to ensure the resume.pdf is served correctly from the absolute root.
+
+📂 Featured Projects MediBot - Medical AI Assistant A health-focused AI assistant designed to provide intuitive medical information through **NLP**.
+
+Tech: Python, Flask, React.js.
+
+### Neon Pulse
+
+A Java application demonstrating software engineering principles and executable packaging.
+
+🔧 Installation & Setup Clone the Repo:
+
+Bash git clone [https://github.com/**LAN**-**SHLOK**/portfolio.git](https://github.com/**LAN**-**SHLOK**/portfolio.git) Install Dependencies:
+
+Bash npm install Run Development Server:
+
+Bash npm run dev 🤝 Connect with Me LinkedIn: shlok-patel-dev
+
+GitHub: **LAN**-**SHLOK**
+
+LeetCode: lan-shlok
+
+Built with React, Tailwind **CSS**, and a focus on clean debugging by Shlok Patel.

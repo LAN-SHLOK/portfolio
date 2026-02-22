@@ -4,8 +4,6 @@ import { Github, Trophy } from 'lucide-react';
 
 const LiveStats = () => {
   const githubUsername = "LAN-SHLOK";
-  
-  // NOTE: Make sure "lan-shlok" is your EXACT Leetcode ID (it is case-sensitive sometimes)
   const leetcodeUsername = "lan-shlok";
 
   const [stats, setStats] = useState({
@@ -14,7 +12,7 @@ const LiveStats = () => {
   });
 
   useEffect(() => {
-    // 1. Fetch GitHub Stats with Error Handling
+    // 1. Fetch GitHub Stats
     fetch(`https://api.github.com/users/${githubUsername}`)
       .then(res => {
         if (!res.ok) throw new Error("GitHub Rate Limit Hit");
@@ -28,35 +26,32 @@ const LiveStats = () => {
       })
       .catch(err => {
         console.warn(err.message);
-        // Fallback to 0 so the UI doesn't break
         setStats(prev => ({ ...prev, github: { repos: 0, followers: 0, loading: false } }));
       });
 
-    // 2. Fetch LeetCode Stats with Error Handling
-    fetch(`https://leetcode-stats-api.herokuapp.com/${leetcodeUsername}`)
+    // 2. Fetch LeetCode Stats (UPDATED TO A RELIABLE API)
+    fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUsername}`)
       .then(res => {
         if (!res.ok) throw new Error("LeetCode API Offline");
         return res.json();
       })
       .then(data => {
-        if (data.status === 'success') {
-          setStats(prev => ({ 
-            ...prev, 
-            leetcode: { 
-              total: data.totalSolved || 0, 
-              easy: data.easySolved || 0, 
-              medium: data.mediumSolved || 0, 
-              hard: data.hardSolved || 0, 
-              loading: false 
-            } 
-          }));
-        } else {
-          throw new Error("LeetCode User Not Found");
-        }
+        // If the API returns an error message, throw an error
+        if (data.errors) throw new Error("LeetCode User Not Found");
+
+        setStats(prev => ({ 
+          ...prev, 
+          leetcode: { 
+            total: data.totalSolved || 0, 
+            easy: data.easySolved || 0, 
+            medium: data.mediumSolved || 0, 
+            hard: data.hardSolved || 0, 
+            loading: false 
+          } 
+        }));
       })
       .catch(err => {
         console.warn(err.message);
-        // Fallback to 0 so the UI doesn't get stuck
         setStats(prev => ({ 
           ...prev, 
           leetcode: { total: 0, easy: 0, medium: 0, hard: 0, loading: false } 

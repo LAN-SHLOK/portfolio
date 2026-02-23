@@ -14,7 +14,7 @@ export const skillData = [
 
 // 2. Real GitHub Projects (All 22 Repositories)
 export const projectData = [
-  { id: 1, title: "Multi-Agent Medibot", category: "AI & Healthcare", description: "RAG-based medical chatbot using Multi-Agent orchestration.", tech: ["Python", "React"], icon: Server, link: "https://github.com/LAN-SHLOK/medibot-backend" },
+  { id: 1, title: "medibot-backend", category: "AI & Healthcare", description: "RAG-based medical chatbot using Multi-Agent orchestration.", tech: ["Python", "React"], icon: Server, link: "https://github.com/LAN-SHLOK/medibot-backend" },
   { id: 2, title: "medibot-frontend", category: "AI & Healthcare", description: "Modern React interface for the MediBot health assistant.", tech: ["React", "JavaScript"], icon: Globe, link: "https://github.com/LAN-SHLOK/medibot-frontend" },
   { id: 3, title: "medibot-scanner", category: "OCR Utility", description: "OCR and image processing module for medical documents.", tech: ["Python"], icon: Layers, link: "https://github.com/LAN-SHLOK/medibot-scanner" },
   { id: 4, title: "NeonPulse", category: "Software", description: "Robust Java application for handling system monitoring.", tech: ["Java"], icon: Code, link: "https://github.com/LAN-SHLOK/Neonpulse" },

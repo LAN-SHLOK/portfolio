@@ -3,9 +3,9 @@ import SpotlightCard from './SpotlightCard';
 import { Github, Trophy } from 'lucide-react';
 
 const LiveStats = () => {
-  // Hardcoded values to ensure a clean console with zero network errors
+  // Stats updated to reflect your 22 current repositories
   const [stats] = useState({
-    github: { repos: 21, followers: 3 },
+    github: { repos: 22, followers: 3 },
     leetcode: { total: 3, easy: 3, medium: 0, hard: 0 }
   });
 
@@ -49,8 +49,14 @@ const LiveStats = () => {
             <span className="text-xs text-green-400">● Live</span>
           </div>
           <div className="flex justify-around text-center">
-            <div><div className="text-2xl font-mono text-white">{stats.github.repos}</div><div className="text-xs text-gray-400">Repos</div></div>
-            <div><div className="text-2xl font-mono text-white">{stats.github.followers}</div><div className="text-xs text-gray-400">Followers</div></div>
+            <div>
+              <div className="text-2xl font-mono text-white">{stats.github.repos}</div>
+              <div className="text-xs text-gray-400">Repos</div>
+            </div>
+            <div>
+              <div className="text-2xl font-mono text-white">{stats.github.followers}</div>
+              <div className="text-xs text-gray-400">Followers</div>
+            </div>
           </div>
         </SpotlightCard>
       </div>

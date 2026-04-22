@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ SHLOK PATEL
+#  SHLOK PATEL
 
 ### Interactive Digital System
 
@@ -16,7 +16,7 @@
 
 </div>
 
-## 🔥 What Makes This Different
+##  What Makes This Different
 
 This isn't a template. It's a **custom-built interactive system** where every animation has purpose and every pixel is intentional.
 
@@ -53,7 +53,7 @@ src/
 
 ---
 
-## ⚙️ Setup
+##  Setup
 
 ```bash
 git clone https://github.com/LAN-SHLOK/portfolio.git
@@ -74,7 +74,7 @@ GITHUB_TOKEN=your-token          # optional, increases rate limit
 
 ---
 
-## 🛡️ Backend
+##  Backend
 
 | Feature | Implementation |
 |---|---|
@@ -85,7 +85,7 @@ GITHUB_TOKEN=your-token          # optional, increases rate limit
 
 ---
 
-## 📦 Build
+##  Build
 
 ```bash
 npm run build      # Production bundle
@@ -98,7 +98,7 @@ Deploys to **Vercel** with zero config. Serverless functions in `/api` auto-depl
 
 ---
 
-## 🎨 Design Rules
+##  Design Rules
 
 | Rule | Detail |
 |---|---|

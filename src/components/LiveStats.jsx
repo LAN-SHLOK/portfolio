@@ -109,8 +109,9 @@ const LiveStats = () => {
 
           <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
             <div className="text-[10px] text-gray-500 font-mono">Status: Synced</div>
-            <div className="flex -space-x-2">
-              {[1,2,3].map(i => <div key={i} className="w-5 h-5 rounded-full bg-zinc-800 border border-black" />)}
+            <div className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              <span className="text-[10px] text-green-500/70 font-mono">Connected</span>
             </div>
           </div>
         </SpotlightCard>

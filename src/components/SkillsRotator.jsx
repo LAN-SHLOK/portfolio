@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SkillsOrbit3D from './SkillsOrbit3D';
 import MobileSkillGrid from './MobileSkillGrid';
 
-const SkillsRotator = ({ onSkillSelect, selectedSkill }) => {
+const SkillsRotator = ({ onSkillSelect, selectedSkill, allTech }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,8 @@ const SkillsRotator = ({ onSkillSelect, selectedSkill }) => {
     <div className="relative h-full w-full flex items-center justify-center overflow-visible">
       <SkillsOrbit3D 
         isMobile={isMobile}
-        selectedSkill={selectedSkill} 
+        selectedSkill={selectedSkill}
+        allTech={allTech} 
         onSkillSelect={(name) => {
           if (selectedSkill === name) onSkillSelect(null);
           else onSkillSelect(name);

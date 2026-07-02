@@ -2,10 +2,10 @@ import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera, Environment, ContactShadows, OrbitControls } from '@react-three/drei';
 import SkillCube from './SkillCube';
-import { skillData } from '../data/projectData';
+import { skillData, getSkillIconUrl } from '../data/projectData';
 import StructuralNode from './StructuralNode';
 
-const OrbitGroup = ({ selectedSkill, onSkillSelect, isMobile }) => {
+const OrbitGroup = ({ selectedSkill, onSkillSelect, isMobile, allTech }) => {
   const groupRef = useRef();
   
   useFrame((state) => {
@@ -15,21 +15,25 @@ const OrbitGroup = ({ selectedSkill, onSkillSelect, isMobile }) => {
   });
 
   const radius = isMobile ? 4.5 : 6;
+  
+  // Use dynamically fetched tech from GitHub repos, fallback to hardcoded skillData
+  const activeTechList = allTech && allTech.length > 0 ? allTech : skillData.map(s => s.name);
+
   return (
     <group ref={groupRef}>
-      {skillData.map((skill, i) => {
-        const angle = (i / skillData.length) * Math.PI * 2;
+      {activeTechList.map((techName, i) => {
+        const angle = (i / activeTechList.length) * Math.PI * 2;
         const x = Math.sin(angle) * radius;
         const z = Math.cos(angle) * radius;
         
         return (
           <SkillCube 
-            key={skill.name}
-            iconUrl={skill.iconUrl}
-            name={skill.name}
+            key={techName}
+            iconUrl={getSkillIconUrl(techName)}
+            name={techName}
             position={[x, 0, z]}
-            isSelected={selectedSkill === skill.name}
-            onClick={() => onSkillSelect(skill.name)}
+            isSelected={selectedSkill === techName}
+            onClick={() => onSkillSelect(techName)}
           />
         );
       })}
@@ -37,7 +41,7 @@ const OrbitGroup = ({ selectedSkill, onSkillSelect, isMobile }) => {
   );
 };
 
-const SkillsOrbit3D = ({ selectedSkill, onSkillSelect, isMobile }) => {
+const SkillsOrbit3D = ({ selectedSkill, onSkillSelect, isMobile, allTech }) => {
   return (
     <div className="absolute inset-0 z-0 w-full h-full">
       <Canvas dpr={[1, isMobile ? 1 : 2]} gl={{ antialias: true }}>
@@ -50,7 +54,7 @@ const SkillsOrbit3D = ({ selectedSkill, onSkillSelect, isMobile }) => {
           
           <group position={[0, 0, 0]}>
             {/* The Skill Orbit */}
-            <OrbitGroup selectedSkill={selectedSkill} onSkillSelect={onSkillSelect} isMobile={isMobile} />
+            <OrbitGroup selectedSkill={selectedSkill} onSkillSelect={onSkillSelect} isMobile={isMobile} allTech={allTech} />
           </group>
 
           <Environment preset="studio" />

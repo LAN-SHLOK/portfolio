@@ -44,11 +44,58 @@ src/
 │   ├── Home                  # Hero + stats
 │   ├── Projects              # Filtered project grid
 │   ├── Skills                # 3D orbit + repo filtering
-│   ├── About                 # Bio + education
+│   ├── About                 # Bio + Specialized CVs
 │   ├── Contact               # Email form
 │   └── NotFound              # Custom 404
 └── api/
     └── index.js              # Express (GitHub, LeetCode, Email)
+```
+
+### System Workflow
+```mermaid
+graph TD
+    User([User / Browser])
+    
+    subgraph Frontend [React / Vite Frontend]
+        Router[React Router]
+        Pages[Home, About, Projects, Skills]
+        3D[Three.js / React Three Fiber Orbit]
+        CV[Specialized CV Downloads]
+    end
+    
+    subgraph SecurityLayer [Vercel Security & Gateway]
+        RateLimit[IP Rate Limiting]
+        Helmet[Helmet.js Headers]
+        Sanitizer[XSS Sanitizer & Payload Limiter]
+        CORS[Strict CORS]
+    end
+
+    subgraph Backend [Express Serverless API]
+        Cache[NodeCache - 1hr TTL]
+        ContactAPI[/api/contact]
+        GithubAPI[/api/github, /api/repos]
+        LeetcodeAPI[/api/leetcode]
+    end
+    
+    subgraph External [External Services]
+        Github[GitHub API]
+        Leetcode[LeetCode GraphQL]
+        Email[Gmail SMTP]
+    end
+    
+    User -->|Visits Site| Router
+    Router --> Pages
+    Pages --> 3D
+    Pages --> CV
+    
+    Pages -->|API Requests| SecurityLayer
+    
+    SecurityLayer -->|Validated| Backend
+    
+    ContactAPI -->|Nodemailer| Email
+    
+    GithubAPI -->|Fetch / Cache| Github
+    LeetcodeAPI -->|Fetch / Cache| Leetcode
 ```
 
 ---

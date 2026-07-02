@@ -52,7 +52,7 @@ const Contact = () => {
         transition={{ duration: 0.8 }}
         className="text-center mb-16 px-6 relative z-10"
       >
-        <h2 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+        <h2 className="text-4xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
           Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-teal-400">Talk</span>
         </h2>
         
@@ -73,7 +73,7 @@ const Contact = () => {
       </motion.div>
 
       {/* 2. MAIN GRID LAYOUT */}
-      <div className="w-full max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="w-full max-w-6xl px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         
         {/* LEFT COLUMN: CONTACT INFO CARDS */}
         <motion.div 

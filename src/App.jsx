@@ -12,6 +12,20 @@ import CursorGlow from './components/CursorGlow';
 import SmoothScroll from './components/SmoothScroll';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Page Transition Wrapper
+const PageWrapper = ({ children }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 function App() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -35,15 +49,17 @@ function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <main className="container mx-auto px-4 pb-32">
-              <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Home />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/skills" element={<Skills />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+            <main className="container mx-auto px-4 pb-32 overflow-hidden">
+              <AnimatePresence mode="wait">
+                <Routes location={location} key={location.pathname}>
+                  <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+                  <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+                  <Route path="/skills" element={<PageWrapper><Skills /></PageWrapper>} />
+                  <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+                  <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+                  <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
+                </Routes>
+              </AnimatePresence>
             </main>
             <Dock />
           </motion.div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SpotlightCard from './SpotlightCard';
+import Tilt from 'react-parallax-tilt';
 import { Github, Trophy, Star, GitCommit, Target, Code } from 'lucide-react';
 
 const LiveStats = () => {
@@ -48,8 +49,9 @@ const LiveStats = () => {
   return (
     <div className="w-full">
       <h2 className="text-xl font-bold text-gray-400 mb-6 uppercase tracking-widest">Live Performance</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SpotlightCard className="p-6 border-l-2 border-orange-500">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} perspective={1000} className="h-full">
+        <SpotlightCard className="p-8 h-full bg-zinc-900/40 backdrop-blur-xl border border-white/10 hover:border-orange-500/50 shadow-[0_0_30px_rgba(249,115,22,0.05)] hover:shadow-[0_0_50px_rgba(249,115,22,0.15)] transition-all duration-500 rounded-3xl">
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-3"><Trophy className="text-orange-500" size={20} /><h3 className="font-bold">LeetCode</h3></div>
             <span className="text-xs text-green-400">● Live</span>
@@ -57,7 +59,7 @@ const LiveStats = () => {
           <div className="mb-4">
             <div className="text-xs text-gray-400 uppercase tracking-widest mb-1">Total Solved</div>
             <div className="flex items-end gap-2">
-              <div className="text-4xl font-bold font-mono text-white leading-none">
+              <div className="text-3xl sm:text-4xl font-bold font-mono text-white leading-none">
                 {stats.leetcode.loading ? "---" : stats.leetcode.total}
               </div>
               <div className="text-xs text-gray-500 mb-1 font-mono">/ 3300+</div>
@@ -85,8 +87,10 @@ const LiveStats = () => {
             </div>
           </div>
         </SpotlightCard>
+        </Tilt>
 
-        <SpotlightCard className="p-6 border-l-2 border-purple-500 flex flex-col justify-between">
+        <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} perspective={1000} className="h-full">
+        <SpotlightCard className="p-8 h-full bg-zinc-900/40 backdrop-blur-xl border border-white/10 hover:border-purple-500/50 shadow-[0_0_30px_rgba(168,85,247,0.05)] hover:shadow-[0_0_50px_rgba(168,85,247,0.15)] transition-all duration-500 rounded-3xl flex flex-col justify-between">
            <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-3"><Github className="text-purple-500" size={20} /><h3 className="font-bold">GitHub Archive</h3></div>
             <span className="text-xs text-green-400 flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> Live</span>
@@ -95,13 +99,13 @@ const LiveStats = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-all group">
               <div className="text-[10px] text-gray-500 uppercase font-bold mb-1 group-hover:text-purple-400 transition-colors">Repositories</div>
-              <div className="text-3xl font-bold font-mono text-white group-hover:scale-110 origin-left transition-transform">
+              <div className="text-2xl sm:text-3xl font-bold font-mono text-white group-hover:scale-110 origin-left transition-transform">
                 {stats.github.loading ? "---" : stats.github.repos}
               </div>
             </div>
             <div className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-all group">
               <div className="text-[10px] text-gray-500 uppercase font-bold mb-1 group-hover:text-purple-400 transition-colors">Followers</div>
-              <div className="text-3xl font-bold font-mono text-white group-hover:scale-110 origin-left transition-transform">
+              <div className="text-2xl sm:text-3xl font-bold font-mono text-white group-hover:scale-110 origin-left transition-transform">
                 {stats.github.loading ? "---" : stats.github.followers}
               </div>
             </div>
@@ -115,6 +119,7 @@ const LiveStats = () => {
             </div>
           </div>
         </SpotlightCard>
+        </Tilt>
       </div>
     </div>
   );

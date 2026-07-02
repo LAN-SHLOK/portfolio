@@ -11,33 +11,64 @@ const SkillsRotator = React.lazy(() => import('../components/SkillsRotator'));
 const Skills = () => {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  useEffect(() => {
+  const fetchRepos = () => {
+    setLoading(true);
+    setError(false);
     fetch('/api/repos')
       .then(res => res.json())
       .then(result => {
         if (result.success) {
           setRepos(result.data);
+        } else {
+          setError(true);
         }
         setLoading(false);
       })
       .catch(err => {
+        setError(true);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchRepos();
   }, []);
+
+  // Extract all unique primary languages directly from repos
+  const dynamicTech = [...new Set(repos.flatMap(repo => repo.tech))].filter(Boolean);
+  
+  // Find all skills from our predefined list that match repo languages OR topics
+  const matchedSkillData = skillData.filter(skillObj => {
+    const searchTerms = [skillObj.name.toLowerCase(), ...(skillObj.aliases || []).map(a => a.toLowerCase())];
+    return repos.some(project => 
+      [...project.tech, ...project.topics].some(t => {
+        const item = t.toLowerCase();
+        return searchTerms.some(term => item === term || item.includes(term) || term.includes(item));
+      })
+    );
+  }).map(s => s.name);
+
+  // Combine them and ensure uniqueness
+  const allTech = [...new Set([...dynamicTech, ...matchedSkillData])];
 
   const filteredProjects = selectedSkill 
     ? repos.filter(project => {
         const skillObj = skillData.find(s => s.name === selectedSkill);
-        if (!skillObj) return false;
         
-        const searchTerms = [skillObj.name.toLowerCase(), ...(skillObj.aliases || []).map(a => a.toLowerCase())];
+        // If skill is in skillData, search by aliases
+        if (skillObj) {
+          const searchTerms = [skillObj.name.toLowerCase(), ...(skillObj.aliases || []).map(a => a.toLowerCase())];
+          return [...project.tech, ...project.topics].some(t => {
+            const item = t.toLowerCase();
+            return searchTerms.some(term => item === term || item.includes(term) || term.includes(item));
+          });
+        }
         
-        return [...project.tech, ...project.topics].some(t => {
-          const item = t.toLowerCase();
-          return searchTerms.some(term => item === term || item.includes(term) || term.includes(item));
-        });
+        // If skill is a dynamic tech (like Rust), exact match against tech/topics
+        return [...project.tech, ...project.topics].some(t => t.toLowerCase() === selectedSkill.toLowerCase());
       }) 
     : repos;
 
@@ -51,7 +82,7 @@ const Skills = () => {
             <h2 className="text-sm font-mono text-cyan-500 tracking-[0.5em] uppercase mb-4">Structural Skill Matrix</h2>
           </Reveal>
           <div className="mb-8 flex justify-center w-full">
-            <TextReveal className="text-4xl md:text-8xl font-black tracking-tighter text-white uppercase justify-center break-words">
+            <TextReveal className="text-3xl sm:text-4xl md:text-8xl font-black tracking-tighter text-white uppercase justify-center break-words">
               Technical Orbit
             </TextReveal>
           </div>
@@ -64,9 +95,9 @@ const Skills = () => {
         </header>
 
         {/* Orbit Section */}
-        <div className="h-[350px] md:h-[600px] mb-10 md:mb-20 relative flex items-center justify-center">
+        <div className="h-[300px] md:h-[600px] mb-10 md:mb-20 relative flex items-center justify-center">
            <React.Suspense fallback={<div className="text-white/20 animate-pulse">Initializing Orbit...</div>}>
-              <SkillsRotator onSkillSelect={setSelectedSkill} selectedSkill={selectedSkill} />
+              <SkillsRotator onSkillSelect={setSelectedSkill} selectedSkill={selectedSkill} allTech={allTech} />
            </React.Suspense>
            
            {/* Hint */}
@@ -95,7 +126,30 @@ const Skills = () => {
               )}
            </div>
 
-           {loading ? null : (
+           {loading ? (
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="glass-card p-8 rounded-3xl h-64 animate-pulse bg-white/5 border border-white/5">
+                    <div className="w-12 h-12 rounded-xl bg-white/10 mb-6"></div>
+                    <div className="h-6 bg-white/10 rounded w-3/4 mb-3"></div>
+                    <div className="h-4 bg-white/10 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-white/10 rounded w-5/6"></div>
+                  </div>
+                ))}
+             </div>
+           ) : error ? (
+             <div className="flex flex-col items-center justify-center py-10 text-center">
+                <p className="text-red-400 font-mono mb-4">Error fetching repositories.</p>
+                <button 
+                  onClick={fetchRepos}
+                  className="px-6 py-2 border border-red-500/30 bg-red-500/10 text-red-500 font-bold rounded-xl hover:bg-red-500/20 transition-colors"
+                >
+                  Retry Connection
+                </button>
+             </div>
+           ) : filteredProjects.length === 0 ? (
+             <div className="text-center py-20 text-gray-500 font-mono">No matching projects found.</div>
+           ) : (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 <AnimatePresence mode="popLayout">
                     {filteredProjects.map((project, index) => (
@@ -110,13 +164,13 @@ const Skills = () => {
                         >
                           <motion.div 
                              layout
-                             className="group glass-card p-8 rounded-3xl h-full flex flex-col hover:border-white/30 transition-all duration-500"
+                             className="group glass-card p-8 rounded-3xl h-full flex flex-col hover:border-cyan-500/30 transition-all duration-500"
                           >
                              <div className="flex justify-between items-start mb-6">
-                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors">
+                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-cyan-500/30 transition-colors">
                                   <img src={getSkillIconUrl(project.tech[0])} alt="icon" className="w-6 h-6 object-contain" />
                                 </div>
-                                <a href={project.link} target="_blank" rel="noreferrer" className="p-3 rounded-xl bg-white/5 hover:bg-white hover:text-black transition-all neu-button">
+                                <a href={project.link} target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-white/5 hover:bg-white hover:text-black transition-all neu-button">
                                   <ArrowUpRight size={18} />
                                 </a>
                              </div>

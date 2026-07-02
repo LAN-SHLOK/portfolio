@@ -1,15 +1,90 @@
 import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox, useTexture } from '@react-three/drei';
+import { RoundedBox, Center, Html } from '@react-three/drei';
 import * as THREE from 'three';
+
+const IconMesh = ({ iconUrl }) => {
+  const [texture, setTexture] = useState(null);
+
+  React.useEffect(() => {
+    let active = true;
+    
+    const loadTexture = async (url) => {
+      try {
+        const res = await fetch(url);
+        let svgText = await res.text();
+        
+        // Ensure SVG has intrinsic dimensions for TextureLoader
+        if (!/<svg[^>]*\swidth=/.test(svgText)) {
+          svgText = svgText.replace('<svg', '<svg width="256" height="256"');
+        }
+        
+        const blob = new Blob([svgText], { type: 'image/svg+xml' });
+        const objectUrl = URL.createObjectURL(blob);
+        
+        const loader = new THREE.TextureLoader();
+        loader.load(
+          objectUrl, 
+          (tex) => {
+            if (!active) return;
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.minFilter = THREE.LinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            setTexture(tex);
+            URL.revokeObjectURL(objectUrl);
+          },
+          undefined,
+          (err) => {
+            console.error('TextureLoader error:', err);
+            URL.revokeObjectURL(objectUrl);
+          }
+        );
+      } catch (err) {
+        console.error('Error fetching SVG:', err);
+      }
+    };
+
+    if (iconUrl) {
+      loadTexture(iconUrl);
+    }
+
+    return () => { active = false; };
+  }, [iconUrl]);
+
+  if (!texture) return null;
+
+  return (
+    <group>
+      {/* Front Face */}
+      <mesh renderOrder={1} position={[0, 0, 0.001]}>
+        <planeGeometry args={[0.6, 0.6]} />
+        <meshBasicMaterial 
+          map={texture} 
+          transparent={true} 
+          side={THREE.FrontSide} 
+          depthTest={true}
+          depthWrite={false}
+        />
+      </mesh>
+      {/* Back Face (rotated 180deg to avoid mirroring) */}
+      <mesh renderOrder={1} position={[0, 0, -0.001]} rotation={[0, Math.PI, 0]}>
+        <planeGeometry args={[0.6, 0.6]} />
+        <meshBasicMaterial 
+          map={texture} 
+          transparent={true} 
+          side={THREE.FrontSide} 
+          depthTest={true}
+          depthWrite={false}
+        />
+      </mesh>
+    </group>
+  );
+};
 
 const SkillCube = ({ iconUrl, name, position, isSelected, onClick }) => {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(false);
   
-  // Use texture for more reliable rendering
-  const texture = useTexture(iconUrl);
-
   useFrame((state) => {
     if (groupRef.current) {
       const time = state.clock.getElapsedTime();
@@ -36,8 +111,8 @@ const SkillCube = ({ iconUrl, name, position, isSelected, onClick }) => {
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
-      {/* 1. The Glass Cube - Highly Transparent */}
-      <RoundedBox args={[1, 1, 1]} radius={0.1} smoothness={4}>
+      {/* 1. The Glass Cube - Highly Transparent with depthWrite={false} to allow inner items to show */}
+      <RoundedBox args={[1, 1, 1]} radius={0.1} smoothness={4} renderOrder={0}>
         <meshPhysicalMaterial
           roughness={0}
           metalness={0.2}
@@ -50,19 +125,15 @@ const SkillCube = ({ iconUrl, name, position, isSelected, onClick }) => {
           opacity={0.15}
           envMapIntensity={2}
           color="#ffffff"
+          depthWrite={false}
         />
       </RoundedBox>
 
-      {/* 2. The Icon - Using Sprite for guaranteed camera facing and visibility */}
-      <sprite scale={[0.7, 0.7, 1]} position={[0, 0, 0]} renderOrder={10}>
-        <spriteMaterial 
-          map={texture} 
-          transparent={true} 
-          depthTest={false}
-          opacity={isSelected ? 1 : 0.9}
-          toneMapped={false}
-        />
-      </sprite>
+
+      {/* 2. The Icon - True WebGL Texture inside the cube */}
+      <group rotation={[0, 0, 0]}>
+        <IconMesh iconUrl={iconUrl} />
+      </group>
 
       {/* 3. Inner Glow / Light Source for the Icon */}
       <pointLight 

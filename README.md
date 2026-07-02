@@ -58,7 +58,7 @@ graph TD
     
     subgraph Frontend [React / Vite Frontend]
         Router[React Router]
-        Pages[Home, About, Projects, Skills]
+        Pages["Home, About, Projects, Skills"]
         3D[Three.js / React Three Fiber Orbit]
         CV[Specialized CV Downloads]
     end
@@ -71,10 +71,10 @@ graph TD
     end
 
     subgraph Backend [Express Serverless API]
-        Cache[NodeCache - 1hr TTL]
-        ContactAPI[/api/contact]
-        GithubAPI[/api/github, /api/repos]
-        LeetcodeAPI[/api/leetcode]
+        Cache["NodeCache - 1hr TTL"]
+        ContactAPI["/api/contact"]
+        GithubAPI["/api/github, /api/repos"]
+        LeetcodeAPI["/api/leetcode"]
     end
     
     subgraph External [External Services]
